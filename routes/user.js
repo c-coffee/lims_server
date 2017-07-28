@@ -12,7 +12,11 @@ router.get('/',function(req,res){
 
 });
 
-router.get('/getList',function(req,res){
+router.get('/getUserList',function(req,res){
+
+});
+
+router.get('/getUserById',function(req,res){
 
 });
 
