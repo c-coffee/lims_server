@@ -11,6 +11,9 @@ let conn = mysql.createConnection({
 router.get('/',function(req,res){
 
 });
+router.post('/addUser',function(req,res){
+    console.log('ok',req);
+});
 
 router.get('/getUserList',function(req,res){
 

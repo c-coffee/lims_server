@@ -1,12 +1,6 @@
 let express = require('express');
-let mysql = require('mysql');
 let router = express.Router();
-
-let conn = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '123456'
-});
+let dept = require('../model/department');
 
 router.get('/',function(req,res){
 
@@ -15,7 +9,10 @@ router.get('/',function(req,res){
 //获取部门信息列表
 router.get('/getDeptList',function(req,res){
     console.log('receive get request!');
-    res.json(['id',1]);
+    dept.getAllDepts(function(err,results){
+            if(err) throw err;
+            res.json(results);
+    })
 });
 
 
