@@ -13,27 +13,36 @@ let pool = mysql.createPool({
 });
 
 module.exports = {
+    //添加记录
+    insertRow:function(tableName,rowInfo,callback){
+        let sql = 'insert into ' + tableName + ' Set ?';
+        pool.query(sql,rowInfo,function(err,res){
+            if(err){
+                console.log('SQLHelper.js->insertRow error!');
+                throw err;
+            }
+            callback(err,res);
+        })
+    },
     //按条件查询表中记录
     getRows:function(tableName,columns,condition,orderColumn,limitCondition,callback){
         let sql = 'select ' + columns + ' from ' + tableName;
 
         if(condition!==null){
-            sql += 'where ' + condition;
+            sql += ' where ' + condition;
         }
         if(orderColumn!==null){
             sql += ' order ' + orderColumn;
         }
         if(limitCondition!==null){
-            sql += 'limit ' + limitCondition;
+            sql += ' limit ' + limitCondition;
         }
+        // console.log(sql);
         pool.query(sql,function(err,res){
-            console.log(sql);
             if(err){
-                console.log('error!');
                 console.log('SQLHelper.js->getRows error!');
                 throw err;
             }
-            console.log('ok!');
             callback(err,res);
         })
     },
@@ -44,11 +53,12 @@ module.exports = {
            sql += 'where ' + condition;
         }
         pool.query(sql,function(err,res){
-            if(error){
-                console.log('SQLHelper.js->getRowsCount error!')
-                throw error;
+            if(err){
+                console.log('SQLHelper.js->getRowsCount error!');
+                throw err;
             }
-            callback(err,res);
+            result = {'total':res.length};
+            callback(err,result);
         })
     },
     //防sql注入工具
