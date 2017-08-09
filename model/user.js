@@ -18,6 +18,11 @@ module.exports = {
             callback(err,res);
         })
     },
+    updateUser:function(userInfo,condition,callback){
+        DB.updateRow('user',userInfo,condition,function(err,res){
+            callback(err,res);
+        })
+    },
     addUser:function(userInfo,callback){
         DB.insertRow('user',userInfo,function(err,res){
             callback(err,res);

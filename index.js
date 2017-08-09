@@ -6,7 +6,7 @@ let app = express();
 
 //设置允许跨域访问，改成同源版本时去掉。
 app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", 'http://localhost:8080');
+    res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Credentials", true);
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
@@ -16,8 +16,9 @@ app.all('*', function(req, res, next) {
     next();
 });
 
+app.use(express.static("upload"));
+
 app.use('/base',base);
 app.use('/user',user);
-
 
 app.listen(3333);

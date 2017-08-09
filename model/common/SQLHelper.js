@@ -13,6 +13,20 @@ let pool = mysql.createPool({
 });
 
 module.exports = {
+    //修改记录
+    updateRow:function(tableName,rowInfo,condition,callback){
+        let sql = 'update ' + tableName + ' set ? ';
+        if(condition !== null){
+            sql += ' where ' + condition;
+        }
+        pool.query(sql,rowInfo,function(err,res){
+            if(err){
+                console.log('SQLHelper.js->updateRow error!');
+                throw err;
+            }
+            callback(err,res);
+        });
+    },
     //添加记录
     insertRow:function(tableName,rowInfo,callback){
         let sql = 'insert into ' + tableName + ' Set ?';
